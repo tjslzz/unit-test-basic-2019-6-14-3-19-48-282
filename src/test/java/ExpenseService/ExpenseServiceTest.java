@@ -7,6 +7,8 @@ import ExpenseService.Project.ProjectType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -66,7 +68,11 @@ class ExpenseServiceTest {
     @Test
     void should_throw_unexpected_project_exception_if_project_is_invalid() {
         // given
+        Project project = mock(Project.class);
+        given(project.getProjectType()).willReturn(ProjectType.UNEXPECTED_PROJECT_TYPE);
+        given(project.getProjectName()).willReturn("jerryLi");
         // when
         // then
+        assertThrows(UnexpectedProjectTypeException.class,()->ExpenseService.getExpenseCodeByProjectTypeAndName(project));
     }
 }
