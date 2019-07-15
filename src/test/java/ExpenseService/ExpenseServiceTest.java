@@ -28,8 +28,14 @@ class ExpenseServiceTest {
     @Test
     void should_return_expense_type_A_if_project_is_external_and_name_is_project_A() throws UnexpectedProjectTypeException {
         // given
+        Project project = mock(Project.class);
+        given(project.getProjectType()).willReturn(ProjectType.EXTERNAL);
+        given(project.getProjectName()).willReturn("Project A");
         // when
+        ExpenseType expenseType = ExpenseService.getExpenseCodeByProjectTypeAndName(project);
         // then
+        verify(project,times(1));
+        assertSame(expenseType,ExpenseType.EXPENSE_TYPE_A);
     }
 
     @Test
